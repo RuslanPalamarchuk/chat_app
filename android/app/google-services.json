@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "709413963236",
+    "project_id": "chatappchik-c4879",
+    "storage_bucket": "chatappchik-c4879.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709413963236:android:0f04c7d0d913e42a55b3f1",
+        "android_client_info": {
+          "package_name": "com.chatappchik"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709413963236-cdth9tgp1vjj2e2ddp5fmq7stf6bpbar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChWht_3Rv89vsupY0ofSiydl4ZiphBekA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709413963236-cdth9tgp1vjj2e2ddp5fmq7stf6bpbar.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
