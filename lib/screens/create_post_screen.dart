@@ -89,7 +89,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   onEditingComplete: () {
                     _submit(image: imageFile);
                   },
-                )
+                ),
 
               ],
             ),

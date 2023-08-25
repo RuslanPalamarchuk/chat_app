@@ -1,5 +1,6 @@
 import 'package:chat_app/bloc/auth_cubit.dart';
 import 'package:chat_app/screens/sign_in_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -48,11 +49,46 @@ class _PostsScreenState extends State<PostsScreen> {
               icon: Icon(Icons.logout)),
         ],
       ),
-      body: ListView.builder(
-          itemCount: 0,
-          itemBuilder: (context, index) {
-            return Container();
-          }),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text("Error"));
+          }
+          if (snapshot.connectionState == ConnectionState.waiting ||
+              snapshot.connectionState == ConnectionState.none) {
+            return Center(child: Text("Loading ..."));
+          }
+          return ListView.builder(
+              itemCount: snapshot.data?.docs.length ?? 0,
+              itemBuilder: (context, index) {
+                final QueryDocumentSnapshot doc = snapshot.data!.docs[index];
+                return Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                                image: NetworkImage(doc["imageUrl"]),
+                            fit: BoxFit.cover)),
+                      ),
+                      SizedBox(height: 5),
+                      // має бути headline6, але він чомусь перекреслений.
+                      Text(doc["userName"],
+                          style: Theme.of(context).textTheme.titleLarge),
+                      SizedBox(height: 5),
+                      // має бути headline5, але він чомусь перекреслений.
+                      Text(doc["description"],
+                          style: Theme.of(context).textTheme.headlineSmall),
+                    ],
+                  ),
+                );
+              });
+        },
+      ),
     );
   }
 }
