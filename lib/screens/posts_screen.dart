@@ -40,6 +40,7 @@ class _PostsScreenState extends State<PostsScreen> {
           }, icon: Icon(Icons.logout)),
         ],
       ),
+      // Якщо в body  ретурнити контейнер, то все працює, а з ЛістБілдером, викидає, так як Ліст Білдер пустий.)
       body: ListView.builder(itemBuilder: (context, index) {
         return Container();
       }),
