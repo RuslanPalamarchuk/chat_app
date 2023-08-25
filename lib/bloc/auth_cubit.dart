@@ -62,4 +62,8 @@ class AuthCubit extends Cubit<AuthState> {
       emit(const AuthFailure(message: "Error..."));
     }
   }
+
+  Future<void> signOut() async{
+    await FirebaseAuth.instance.signOut();
+  }
 }
