@@ -23,32 +23,36 @@ class _PostsScreenState extends State<PostsScreen> {
       appBar: AppBar(
         actions: [
           // Create Post
-          IconButton(onPressed: () {
-            final picker = ImagePicker();
-            picker.pickImage(source: ImageSource.gallery, imageQuality: 40).then((xFile) {
+          IconButton(
+              onPressed: () {
+                final picker = ImagePicker();
+                picker
+                    .pickImage(source: ImageSource.gallery, imageQuality: 40)
+                    .then((xFile) {
+                  if (xFile != null) {
+                    final File file = File(xFile.path);
 
-              if(xFile != null) {
-                final File file = File(xFile.path);
+                    Navigator.of(context)
+                        .pushNamed(CreatePostScreen.id, arguments: file);
+                  }
+                });
+              },
+              icon: const Icon(Icons.add)),
 
-                Navigator.of(context).pushNamed(CreatePostScreen.id, arguments: file);
-              }
-            });
-
-          }, icon: const Icon(Icons.add)),
-
-          IconButton(onPressed: () {
-            context.read<AuthCubit>().signOut().then((_) =>
-            Navigator.of(context).
-            pushReplacementNamed(SignInScreen.id));
-
-          },
+          IconButton(
+              onPressed: () {
+                context.read<AuthCubit>().signOut().then((_) =>
+                    Navigator.of(context)
+                        .pushReplacementNamed(SignInScreen.id));
+              },
               icon: Icon(Icons.logout)),
         ],
       ),
-      // Якщо в body  ретурнити контейнер, то все працює, а з ЛістБілдером, викидає, так як Ліст Білдер пустий.)
-      body: ListView.builder(itemBuilder: (context, index) {
-        return Container();
-      }),
+      body: ListView.builder(
+          itemCount: 0,
+          itemBuilder: (context, index) {
+            return Container();
+          }),
     );
   }
 }
