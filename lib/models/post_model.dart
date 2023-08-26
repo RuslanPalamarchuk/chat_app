@@ -6,7 +6,7 @@ class Post {
  final String userName;
  final Timestamp timestamp;
  final String imageUrl;
- final String descroption;
+ final String description;
 
   Post({
     required this.id,
@@ -14,6 +14,6 @@ class Post {
     required this.userName,
     required this.timestamp,
     required this.imageUrl
-    , required this.descroption,
+    , required this.description,
   });
 }

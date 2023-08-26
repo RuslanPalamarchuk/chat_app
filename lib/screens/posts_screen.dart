@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import '../models/post_model.dart';
+import 'chat_screen.dart';
 import 'create_post_screen.dart';
 
 class PostsScreen extends StatefulWidget {
@@ -63,27 +65,40 @@ class _PostsScreenState extends State<PostsScreen> {
               itemCount: snapshot.data?.docs.length ?? 0,
               itemBuilder: (context, index) {
                 final QueryDocumentSnapshot doc = snapshot.data!.docs[index];
-                return Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                                image: NetworkImage(doc["imageUrl"]),
-                            fit: BoxFit.cover)),
-                      ),
-                      SizedBox(height: 5),
-                      // має бути headline6, але він чомусь перекреслений.
-                      Text(doc["userName"],
-                          style: Theme.of(context).textTheme.titleLarge),
-                      SizedBox(height: 5),
-                      // має бути headline5, але він чомусь перекреслений.
-                      Text(doc["description"],
-                          style: Theme.of(context).textTheme.headlineSmall),
-                    ],
+
+                final Post post = Post(
+                    id: doc["postId"],
+                    userID: doc["userID"],
+                    userName: doc["userName"],
+                    timestamp: doc["timestamp"],
+                    imageUrl: doc["imageUrl"],
+                    description: doc["description"]);
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(ChatScreen.id, arguments: doc);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                  image: NetworkImage(post.imageUrl),
+                              fit: BoxFit.cover)),
+                        ),
+                        SizedBox(height: 5),
+                        // має бути headline6, але він чомусь перекреслений.
+                        Text(post.userName,
+                            style: Theme.of(context).textTheme.titleLarge),
+                        SizedBox(height: 5),
+                        // має бути headline5, але він чомусь перекреслений.
+                        Text(post.description,
+                            style: Theme.of(context).textTheme.headlineSmall),
+                      ],
+                    ),
                   ),
                 );
               });
