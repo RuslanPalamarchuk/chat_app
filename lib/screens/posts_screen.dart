@@ -48,18 +48,18 @@ class _PostsScreenState extends State<PostsScreen> {
                     Navigator.of(context)
                         .pushReplacementNamed(SignInScreen.id));
               },
-              icon: Icon(Icons.logout)),
+              icon: const Icon(Icons.logout)),
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection("posts").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Center(child: Text("Error"));
+            return const Center(child: Text("Error"));
           }
           if (snapshot.connectionState == ConnectionState.waiting ||
               snapshot.connectionState == ConnectionState.none) {
-            return Center(child: Text("Loading ..."));
+            return const Center(child: Text("Loading ..."));
           }
           return ListView.builder(
               itemCount: snapshot.data?.docs.length ?? 0,
@@ -67,7 +67,7 @@ class _PostsScreenState extends State<PostsScreen> {
                 final QueryDocumentSnapshot doc = snapshot.data!.docs[index];
 
                 final Post post = Post(
-                    id: doc["postId"],
+                    id: doc["postID"],
                     userID: doc["userID"],
                     userName: doc["userName"],
                     timestamp: doc["timestamp"],
@@ -75,7 +75,7 @@ class _PostsScreenState extends State<PostsScreen> {
                     description: doc["description"]);
                 return GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(ChatScreen.id, arguments: doc);
+                    Navigator.of(context).pushNamed(ChatScreen.id, arguments: post);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(18.0),
@@ -86,15 +86,16 @@ class _PostsScreenState extends State<PostsScreen> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               image: DecorationImage(
+                                  //image: NetworkImage(doc['imageUrl']),
                                   image: NetworkImage(post.imageUrl),
-                              fit: BoxFit.cover)),
+                                  fit: BoxFit.cover)),
                         ),
-                        SizedBox(height: 5),
-                        // має бути headline6, але він чомусь перекреслений.
+                        const SizedBox(height: 5),
+                        // має бути headline6, але він чомусь перекреслений. https://api.flutter.dev/flutter/material/TextTheme-class.html
                         Text(post.userName,
                             style: Theme.of(context).textTheme.titleLarge),
-                        SizedBox(height: 5),
-                        // має бути headline5, але він чомусь перекреслений.
+                         const SizedBox(height: 5),
+                        // має бути headline5, але він чомусь перекреслений. https://api.flutter.dev/flutter/material/TextTheme-class.html
                         Text(post.description,
                             style: Theme.of(context).textTheme.headlineSmall),
                       ],

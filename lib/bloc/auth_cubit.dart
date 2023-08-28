@@ -39,7 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(const AuthLoading());
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      final UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       await FirebaseFirestore.instance
           .collection('users')
