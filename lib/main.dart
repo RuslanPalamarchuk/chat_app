@@ -1,4 +1,6 @@
 import 'package:chat_app/bloc/auth_cubit.dart';
+import 'package:chat_app/screens/chat_screen.dart';
+import 'package:chat_app/screens/create_post_screen.dart';
 import 'package:chat_app/screens/posts_screen.dart';
 import 'package:chat_app/screens/sign_in_screen.dart';
 import 'package:chat_app/screens/sign_up_screen.dart';
@@ -26,6 +28,8 @@ class MyApp extends StatelessWidget {
           SignInScreen.id: (context) => const SignInScreen(),
           SignUpScreen.id: (context) => const SignUpScreen(),
           PostsScreen.id: (context) => const PostsScreen(),
+          CreatePostScreen.id: (context) => const CreatePostScreen(),
+          ChatScreen.id: (context) => const ChatScreen(),
         },
       ),
     );
